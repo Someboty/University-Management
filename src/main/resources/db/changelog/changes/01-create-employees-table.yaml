@@ -1,0 +1,41 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-employees-table
+      author: Vladyslav Ihnatiuk
+      changes:
+        - createTable:
+            tableName: employees
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: degree
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: department
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: salary
+                  type: decimal(38,2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: is_head
+                  type: boolean
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false
