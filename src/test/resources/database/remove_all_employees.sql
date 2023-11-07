@@ -1,1 +1,3 @@
-DELETE FROM employees WHERE department = 'Engineering';
+DELETE FROM employees_departments;
+DELETE FROM departments;
+DELETE FROM employees;

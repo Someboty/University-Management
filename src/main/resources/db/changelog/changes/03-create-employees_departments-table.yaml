@@ -1,0 +1,24 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-employees_departments-table
+      author: Vladyslav Ihnatiuk
+      changes:
+        - createTable:
+            tableName: employees_departments
+            columns:
+              - column:
+                  name: employee_id
+                  type: bigint
+                  constraints:
+                    foreignKeyName: employee_id
+                    referencedTableName: employees
+                    referencedColumnNames: id
+                    nullable: false
+              - column:
+                  name: department_id
+                  type: bigint
+                  constraints:
+                    foreignKeyName: department_id
+                    referencedTableName: departments
+                    referencedColumnNames: id
+                    nullable: false

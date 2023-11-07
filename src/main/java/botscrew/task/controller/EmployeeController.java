@@ -32,7 +32,7 @@ public class EmployeeController {
     }
 
     @ShellMethod(key = "Global search by ")
-    public String globalSearchBy(@ShellOption({"department_name"}) String namePart) {
+    public String globalSearchBy(@ShellOption({"namePart"}) String namePart) {
         return employeeService.globalSearchBy(namePart);
     }
 }

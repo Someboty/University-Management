@@ -1,7 +1,9 @@
 package botscrew.task.service.impl;
 
 import botscrew.task.model.Employee;
+import botscrew.task.repository.DepartmentRepository;
 import botscrew.task.repository.EmployeeRepository;
+import botscrew.task.res.Messages;
 import botscrew.task.service.EmployeeService;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.stream.Collectors;
@@ -12,13 +14,13 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class EmployeeServiceImpl implements EmployeeService {
     private final EmployeeRepository employeeRepository;
+    private final DepartmentRepository departmentRepository;
 
     @Override
     public String headOfDepartment(String departmentName) {
         checkIfDepartmentExists(departmentName);
-        return String.format(
-                "Head of " + departmentName + " department is "
-                        + findHeadOfDepartment(departmentName).getName());
+        return String.format(Messages.HEAD_OF_DEPARTMENT_MESSAGE, departmentName,
+                findHeadOfDepartment(departmentName).getName());
     }
 
     @Override
@@ -30,16 +32,15 @@ public class EmployeeServiceImpl implements EmployeeService {
                 departmentName, Employee.Degree.ASSOCIATE_PROFESSOR);
         int professorsCount = employeeRepository.countByDepartmentAndDegree(
                 departmentName, Employee.Degree.PROFESSOR);
-        return String.format("assistants - " + assistantsCount + System.lineSeparator()
-                + "associate professors - " + associateProfessorsCount + System.lineSeparator()
-                + " professors - " + professorsCount);
+        return String.format(Messages.STATISTIC_MESSAGE, assistantsCount,
+                associateProfessorsCount, professorsCount);
     }
 
     @Override
     public String showAverageSalary(String departmentName) {
         checkIfDepartmentExists(departmentName);
-        return String.format("The average salary of " + departmentName + " is "
-                + employeeRepository.findAverageSalaryByDepartment(departmentName));
+        return String.format(Messages.AVERAGE_SALARY_MESSAGE, departmentName,
+                employeeRepository.findAverageSalaryByDepartment(departmentName));
     }
 
     @Override
@@ -52,18 +53,21 @@ public class EmployeeServiceImpl implements EmployeeService {
     public String globalSearchBy(String namePart) {
         return employeeRepository.findAllByNameContains(namePart).stream()
                 .map(Employee::getName)
+                .sorted()
                 .collect(Collectors.joining(", "));
     }
 
     private void checkIfDepartmentExists(String departmentName) {
-        if (!employeeRepository.existsByDepartment(departmentName)) {
-            throw new EntityNotFoundException("Can't find department " + departmentName);
+        if (!departmentRepository.existsByName(departmentName)) {
+            throw new EntityNotFoundException(Messages.CANT_FIND_DEPARTMENT_MESSAGE
+                    + departmentName);
         }
     }
 
     private Employee findHeadOfDepartment(String departmentName) {
-        return employeeRepository.findByDepartmentAndIsHead(departmentName, true).orElseThrow(
-                () -> new EntityNotFoundException("Can't find head of department " + departmentName)
+        return employeeRepository.findByDepartmentAndIsHead(departmentName).orElseThrow(
+                () -> new EntityNotFoundException(Messages.CANT_FIND_HEAD_OF_DEPARTMENT_MESSAGE
+                        + departmentName)
         );
     }
 }
