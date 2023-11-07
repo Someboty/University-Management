@@ -26,11 +26,11 @@ Here's a brief high-level overview of the tech stack the **University Management
 
 ## ⚡️Getting Started
 
-First, let's download a [repository](https://github.com/Someboty/bookShop).
+First, let's download a [repository](https://github.com/Someboty/University-Management).
 Via IDE:
 - Open IntelliJ IDEA.
 - Select "File" -> "New Project from Version Control."
-- Paste the link: https://github.com/Someboty/test-task.git
+- Paste the link: https://github.com/Someboty/University-Management.git
 
 Via git console command:
 
@@ -38,7 +38,7 @@ Via git console command:
 
 ```bash
 cd d:\Projects
-git clone https://github.com/Someboty/test-task.git
+git clone https://github.com/Someboty/University-Management.git
 ```
 Now we are ready to start!
 
